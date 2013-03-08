@@ -183,3 +183,16 @@ function declareWinner( userHand, dealerHand ) {
         return lose;
     }
 }
+
+/**
+ * Gives the player and dealer each a hand and determines the winner.
+ * 
+ * @return void
+ */
+function playGame() {
+    var player1 = playAsUser();
+    var dealer1 = playAsDealer();
+    console.log( declareWinner( player1, dealer1 ) );
+}
+
+playGame();
