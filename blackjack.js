@@ -1,8 +1,8 @@
 /**
  * Card Constructor - public
  * 
- * @param s         suit of the card
- * @param n         number ( rank ) of the card
+ * @param int s         suit of the card
+ * @param int n         number ( rank ) of the card
  */
 function Card( s, n ) {
     
@@ -44,6 +44,9 @@ function Card( s, n ) {
  *                              and number between 1 and 13
  */
 function deal() {
+
+    // Generate a random number between 1 and 4 for the suit, 
+    // and a random number between 1 and 13 for the number
     var newSuit = Math.floor( Math.random() * 4 + 1 );
     var newNumber = Math.floor( Math.random() * 13 + 1 );
 
@@ -97,7 +100,7 @@ var Hand = function() {
     };
 
     /**
-     * Shows user what the hand looks like
+     * Shows the user what the hand looks like
      * 
      * @return string handString    a text display of the cards in hand
      */
@@ -119,8 +122,6 @@ var Hand = function() {
      */
     this.hitMe = function() {
         var newCard = deal();
-
-        // Add the card to the hand array
         return newHand.push( newCard );
     };
 };
@@ -143,14 +144,42 @@ function playAsDealer() {
  * Creates a hand for the player, shows the player their hand and asks 
  * whether they would like to hit or stay until they choose to stay
  * 
- * @return object playerHand    the player's hand
+ * @return object userHand    the player's hand
  */
 function playAsUser() {
-    var playerHand = new Hand();
-    var askHit = confirm( "In hand: " + playerHand.printHand() + ". Would you like to hit? Press cancel to stay." );
+    var userHand = new Hand();
+    var askHit = confirm( "In hand: " + userHand.printHand() + ". Would you like to hit? Press cancel to stay." );
     while( askHit ) {
-        playerHand.hitMe();
-        askHit = confirm( "In hand: " + playerHand.printHand() + ". Would you like to hit? Press cancel to stay." );
+        userHand.hitMe();
+        askHit = confirm( "In hand: " + userHand.printHand() + ". Would you like to hit? Press cancel to stay." );
     }
-    return playerHand;
+    return userHand;
+}
+
+/**
+ * Determines whether the player or dealer won based on their scores
+ * 
+ * @param  object userHand      the user's hand
+ * @param  object dealerHand    the dealer's hand
+ * @return string               game result declaration message
+ */
+function declareWinner( userHand, dealerHand ) {
+    var win = "You win!";
+    var lose = "You lose!";
+    var tie = "You tied!";
+    if ( userHand.score() > 21 ) {
+        if ( dealerHand.score() > 21 ) {
+            return tie;
+        } else {
+            return lose;
+        }
+    } else if ( dealerHand.score() > 21 ) {
+        return win;
+    } else if ( userHand.score() > dealerHand.score() ) {
+        return win;
+    } else if ( userHand.score() === dealerHand.score() ) {
+        return tie;
+    } else {
+        return lose;
+    }
 }
