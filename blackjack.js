@@ -109,7 +109,7 @@ var Hand = function() {
 
         // Loop through each card in the hand, adding the suit & value to handString
         for( var i = 0; i < newHand.length; i++ ) {
-            handString += ( newHand[ i ].getValue() + ", " + newHand[ i ].getSuit() );
+            handString += ( " " + newHand[ i ].getValue() + " of suit " + newHand[ i ].getSuit() );
         }
 
         return handString;
